@@ -1,14 +1,15 @@
-from pydantic import BaseModel
+from typing import List
 from datetime import datetime
+from pydantic import BaseModel, Field
 
 
 class SaleItemCreate(BaseModel):
     product_id: int
-    quantity: int
+    quantity: int = Field(gt=0)
 
 
 class SaleCreate(BaseModel):
-    items: list[SaleItemCreate]
+    items: List[SaleItemCreate] = Field(min_length=1)
 
 
 class SaleItemResponse(BaseModel):
@@ -35,7 +36,7 @@ class SaleDetailResponse(BaseModel):
     id: int
     total_price: float
     created_at: datetime
-    items: list[SaleItemResponse]
+    items: List[SaleItemResponse]
 
     class Config:
         from_attributes = True
