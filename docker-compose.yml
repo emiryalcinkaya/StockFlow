@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16
+    container_name: stockflow_db
+    restart: always
+    environment:
+      POSTGRES_USER: stockflow_user
+      POSTGRES_PASSWORD: stockflow_password
+      POSTGRES_DB: stockflow_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
