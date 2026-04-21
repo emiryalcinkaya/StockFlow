@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.api.deps import get_current_user
 from app.db.session import get_db
 from app.db.models.product import Product
 from app.db.models.sale import Sale
@@ -10,8 +11,35 @@ from app.schemas.sale import SaleCreate, SaleResponse
 router = APIRouter(prefix="/sales", tags=["sales"])
 
 
+@router.get("/")
+def list_sales(
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    sales = db.query(Sale).all()
+    return sales
+
+
+@router.get("/{sale_id}")
+def get_sale(
+    sale_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+    sale = db.query(Sale).filter(Sale.id == sale_id).first()
+
+    if not sale:
+        raise HTTPException(status_code=404, detail="Sale not found")
+
+    return sale
+
+
 @router.post("/", response_model=SaleResponse)
-def create_sale(data: SaleCreate, db: Session = Depends(get_db)):
+def create_sale(
+    data: SaleCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
     total_price = 0
     sale_items_data = []
 
