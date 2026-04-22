@@ -13,39 +13,31 @@ const recentSalesTable = document.getElementById("recentSalesTable");
 
 async function loadDashboard() {
   try {
-    const [productsRes, salesRes] = await Promise.all([
-      apiFetch("/products/"),
-      apiFetch("/sales/")
-    ]);
+    // sadece summary backend'den
+    const summaryRes = await apiFetch("/dashboard/summary");
+    const summary = await summaryRes.json();
 
-    const products = await productsRes.json();
-    const sales = await salesRes.json();
-
-    if (!productsRes.ok) {
-      showToast(products.detail || "Failed to load products", "error");
+    if (!summaryRes.ok) {
+      showToast(summary.detail || "Failed to load dashboard", "error");
       return;
     }
+
+    totalProductsEl.textContent = summary.total_products;
+    lowStockCountEl.textContent = summary.low_stock;
+    totalSalesEl.textContent = summary.total_sales;
+    totalRevenueEl.textContent = formatCurrency(Number(summary.revenue));
+
+    // sales yine ayrı (recent için)
+    const salesRes = await apiFetch("/sales/");
+    const sales = await salesRes.json();
 
     if (!salesRes.ok) {
       showToast(sales.detail || "Failed to load sales", "error");
       return;
     }
 
-    const lowStockCount = products.filter(
-      (product) => Number(product.stock_quantity) < 5
-    ).length;
-
-    const revenue = sales.reduce(
-      (sum, sale) => sum + Number(sale.total_price || 0),
-      0
-    );
-
-    totalProductsEl.textContent = products.length;
-    lowStockCountEl.textContent = lowStockCount;
-    totalSalesEl.textContent = sales.length;
-    totalRevenueEl.textContent = formatCurrency(revenue);
-
     renderRecentSales(sales.slice(0, 5));
+
   } catch (error) {
     console.error(error);
     showToast("Failed to load dashboard", "error");
@@ -54,7 +46,10 @@ async function loadDashboard() {
 
 function renderRecentSales(sales) {
   if (!sales.length) {
-    renderEmptyState(recentSalesTable.closest(".card-body"), "No sales found yet.");
+    renderEmptyState(
+      recentSalesTable.closest(".card-body"),
+      "No sales found yet."
+    );
     return;
   }
 
@@ -63,7 +58,7 @@ function renderRecentSales(sales) {
       (sale) => `
         <tr>
           <td>#${sale.id}</td>
-          <td>${formatCurrency(sale.total_price)}</td>
+          <td>${formatCurrency(Number(sale.total_price))}</td>
           <td>${formatDate(sale.created_at)}</td>
         </tr>
       `
