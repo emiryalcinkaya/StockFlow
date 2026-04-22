@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockFlow Login</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/auth.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="auth-brand">
+        <img src="assets/images/logo.png" alt="StockFlow logo" class="auth-brand-logo" />
+        <div class="auth-brand-copy">
+          <div class="auth-brand-name">StockFlow</div>
+          <div class="auth-brand-tagline">Inventory Control Suite</div>
+        </div>
+      </div>
+
+      <h1 class="auth-title">StockFlow</h1>
+      <p class="auth-subtitle">
+        A clean inventory and sales experience. Sign in to manage products,
+        stock movement, and sales history.
+      </p>
+
+      <form id="loginForm" class="auth-form">
+        <div class="field">
+          <label for="username">Username</label>
+          <input class="input" type="text" id="username" placeholder="Enter username" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input class="input" type="password" id="password" placeholder="Enter password" required />
+        </div>
+
+        <button id="loginButton" class="btn btn-primary" type="submit">
+          <i data-lucide="log-in"></i>
+          <span>Sign In</span>
+        </button>
+        <p id="message" class="form-message"></p>
+      </form>
+
+      <div class="auth-footer">
+        Demo credentials: <strong>admin / admin123</strong>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initLoginPage } from "./assets/js/auth.js";
+    initLoginPage();
+  </script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

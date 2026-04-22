@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockFlow Create Sale</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/sales.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="StockFlow logo" class="brand-logo" />
+        <div>
+          <div class="brand-title">StockFlow</div>
+          <div class="brand-subtitle">Inventory Control Suite</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link" href="dashboard.html">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" href="products.html">
+          <i data-lucide="package"></i>
+          <span>Products</span>
+        </a>
+
+        <a class="nav-link active" href="sales.html">
+          <i data-lucide="shopping-cart"></i>
+          <span>Create Sale</span>
+        </a>
+
+        <a class="nav-link" href="sales-history.html">
+          <i data-lucide="history"></i>
+          <span>Sales History</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary logout-btn" data-logout>
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Create Sale</h1>
+          <p class="page-subtitle">Build a clean cart flow with live stock-backed data.</p>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="card-header">
+          <h3>Add Item</h3>
+        </div>
+        <div class="card-body">
+          <div class="product-picker">
+            <div class="field">
+              <label for="productSelect">Product</label>
+              <div class="select-shell">
+                <select id="productSelect" class="select"></select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label id="saleQtyLabel">Quantity</label>
+              <div class="quantity-stepper" role="group" aria-labelledby="saleQtyLabel">
+                <button class="stepper-btn" id="decreaseQtyBtn" type="button">
+                  <i data-lucide="minus"></i>
+                </button>
+                <div class="stepper-value" id="saleQtyValue">1</div>
+                <button class="stepper-btn" id="increaseQtyBtn" type="button">
+                  <i data-lucide="plus"></i>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <button id="addToCartButton" class="btn btn-primary icon-btn" type="button">
+                <i data-lucide="shopping-cart"></i>
+                <span>Add to Cart</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sales-side-grid section-spacing">
+        <section class="card">
+          <div class="card-header">
+            <h3>Current Cart</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cartTable"></tbody>
+              </table>
+            </div>
+
+            <div class="cart-empty-zone"></div>
+
+            <div class="sales-summary section-spacing">
+              <div class="sales-meta">Total sale amount</div>
+              <div id="cartTotal" class="sales-total">$0.00</div>
+              <div>
+                <button id="submitSaleButton" class="btn btn-primary icon-btn">
+                  <i data-lucide="shopping-bag"></i>
+                  <span>Create Sale</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card available-products-card">
+          <div class="card-header">
+            <h3>Available Products</h3>
+          </div>
+          <div class="card-body">
+            <div id="availableProductsList" class="soft-list"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="assets/js/sales.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

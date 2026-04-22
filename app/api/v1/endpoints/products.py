@@ -22,6 +22,7 @@ def create_product(
     current_user=Depends(require_role("admin"))
 ):
     existing_product = db.query(Product).filter(Product.barcode == data.barcode).first()
+
     if existing_product:
         raise HTTPException(status_code=400, detail="Barcode already exists")
 
@@ -29,7 +30,8 @@ def create_product(
         name=data.name,
         barcode=data.barcode,
         price=data.price,
-        stock_quantity=data.stock_quantity
+        stock_quantity=data.stock_quantity,
+        is_active=True
     )
 
     db.add(product)
@@ -40,12 +42,15 @@ def create_product(
 
 @router.get("/", response_model=List[ProductResponse])
 def get_products(db: Session = Depends(get_db)):
-    return db.query(Product).all()
+    return db.query(Product).filter(Product.is_active == True).all()
 
 
 @router.get("/{product_id}", response_model=ProductResponse)
 def get_product(product_id: int, db: Session = Depends(get_db)):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True
+    ).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -60,7 +65,10 @@ def update_product(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("admin"))
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True
+    ).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -92,19 +100,23 @@ def update_product(
 
 
 @router.delete("/{product_id}")
-def delete_product(
+def archive_product(
     product_id: int,
     db: Session = Depends(get_db),
     current_user=Depends(require_role("admin"))
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True
+    ).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    db.delete(product)
+    product.is_active = False
     db.commit()
-    return {"message": "Product deleted successfully"}
+
+    return {"message": "Product archived successfully"}
 
 
 @router.post("/{product_id}/increase-stock", response_model=ProductResponse)
@@ -114,7 +126,10 @@ def increase_stock(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("admin"))
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True
+    ).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
@@ -133,7 +148,10 @@ def decrease_stock(
     db: Session = Depends(get_db),
     current_user=Depends(require_role("admin"))
 ):
-    product = db.query(Product).filter(Product.id == product_id).first()
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True
+    ).first()
 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")

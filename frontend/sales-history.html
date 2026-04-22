@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockFlow Sales History</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/sales.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="StockFlow logo" class="brand-logo" />
+        <div>
+          <div class="brand-title">StockFlow</div>
+          <div class="brand-subtitle">Inventory Control Suite</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link" href="dashboard.html">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" href="products.html">
+          <i data-lucide="package"></i>
+          <span>Products</span>
+        </a>
+
+        <a class="nav-link" href="sales.html">
+          <i data-lucide="shopping-cart"></i>
+          <span>Create Sale</span>
+        </a>
+
+        <a class="nav-link active" href="sales-history.html">
+          <i data-lucide="history"></i>
+          <span>Sales History</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary logout-btn" data-logout>
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Sales History</h1>
+          <p class="page-subtitle">Review all sales and inspect sale details.</p>
+        </div>
+      </div>
+
+      <section class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h3>All Sales</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="salesHistoryTable"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Sale Detail</h3>
+          </div>
+          <div class="card-body" id="saleDetailPanel">
+            <div class="empty-state">Select a sale to see the details.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="assets/js/sales-history.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

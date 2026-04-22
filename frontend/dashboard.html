@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StockFlow Dashboard</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/images/logo.png" alt="StockFlow logo" class="brand-logo" />
+        <div>
+          <div class="brand-title">StockFlow</div>
+          <div class="brand-subtitle">Inventory Control Suite</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-link active" href="dashboard.html">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a class="nav-link" href="products.html">
+          <i data-lucide="package"></i>
+          <span>Products</span>
+        </a>
+
+        <a class="nav-link" href="sales.html">
+          <i data-lucide="shopping-cart"></i>
+          <span>Create Sale</span>
+        </a>
+
+        <a class="nav-link" href="sales-history.html">
+          <i data-lucide="history"></i>
+          <span>Sales History</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary logout-btn" data-logout>
+          <i data-lucide="log-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle">Overview of products, revenue, and recent sales.</p>
+        </div>
+      </div>
+
+      <section class="card hero-card dashboard-hero">
+        <div>
+          <div class="hero-brand">
+            <img src="assets/images/logo.png" alt="StockFlow logo" class="hero-brand-logo" />
+            <div class="hero-brand-copy">
+              <h2 class="hero-brand-title">StockFlow</h2>
+              <p class="hero-brand-tagline">Track inventory, stock movement, and sales with a clear live overview.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-inline">
+          <a class="btn btn-primary" href="products.html">
+            <i data-lucide="package"></i>
+            <span>Manage Products</span>
+          </a>
+
+          <a class="btn btn-primary" href="sales.html">
+            <i data-lucide="shopping-cart"></i>
+            <span>Create Sale</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="grid grid-4 dashboard-grid">
+        <div class="card stat-card">
+          <i class="kpi-icon" data-lucide="package-search"></i>
+          <div class="stat-label">Total Products</div>
+          <div class="stat-value" id="totalProducts">-</div>
+          <div class="metric-note">All products currently listed</div>
+        </div>
+
+        <div class="card stat-card">
+          <i class="kpi-icon" data-lucide="shield-alert"></i>
+          <div class="stat-label">Low Stock</div>
+          <div class="stat-value" id="lowStockCount">-</div>
+          <div class="metric-note">Products with stock under 5</div>
+        </div>
+
+        <div class="card stat-card">
+          <i class="kpi-icon" data-lucide="shopping-bag"></i>
+          <div class="stat-label">Total Sales</div>
+          <div class="stat-value" id="totalSales">-</div>
+          <div class="metric-note">All recorded sales</div>
+        </div>
+
+        <div class="card stat-card">
+          <i class="kpi-icon" data-lucide="wallet"></i>
+          <div class="stat-label">Revenue</div>
+          <div class="stat-value" id="totalRevenue">-</div>
+          <div class="metric-note">Calculated from sales history</div>
+        </div>
+      </section>
+
+      <section class="card section-spacing">
+        <div class="card-header">
+          <h3>Recent Sales</h3>
+        </div>
+
+        <div class="card-body recent-sales-list">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Sale ID</th>
+                  <th>Total</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentSalesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="assets/js/dashboard.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
