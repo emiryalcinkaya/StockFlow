@@ -13,7 +13,6 @@ const recentSalesTable = document.getElementById("recentSalesTable");
 
 async function loadDashboard() {
   try {
-    // sadece summary backend'den
     const summaryRes = await apiFetch("/dashboard/summary");
     const summary = await summaryRes.json();
 
@@ -27,7 +26,6 @@ async function loadDashboard() {
     totalSalesEl.textContent = summary.total_sales;
     totalRevenueEl.textContent = formatCurrency(Number(summary.revenue));
 
-    // sales yine ayrı (recent için)
     const salesRes = await apiFetch("/sales/");
     const sales = await salesRes.json();
 
