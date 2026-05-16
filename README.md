@@ -46,14 +46,6 @@ frontend/
 
 The backend handles all business logic and validation, while the frontend communicates through a clean API layer.
 
-## Running the Project
-
-uvicorn app.main:app --reload
-
-Then open:
-
-frontend/index.html
-
 ## Why This Project Matters
 
 This project demonstrates the ability to:
